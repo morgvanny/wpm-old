@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team: MyString
+  wpm: 1
+  length: 1
+
+two:
+  team: MyString
+  wpm: 1
+  length: 1
