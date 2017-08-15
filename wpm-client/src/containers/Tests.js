@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import TestRow from '../components/TestRow';
+import TestForm from './TestForm';
+import { getTests } from '../actions/tests';
 
-const Tests = (props) => (
-  <div>
-    <h1>Tests</h1>
-    {props.tests.map(test => 
-      <div key={test.id}>
-        <h3>Team: {test.team}</h3>
-        <p>WPM: {test.wpm}</p>
-        <p>Length: {test.length} characters</p>
+class Tests extends Component {
+
+  componentDidMount() {
+    this.props.getTests()
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Tests</h1>
+        {this.props.tests.map(test => <TestRow key={test.id} test={test} /> )}
+        <TestForm />
       </div>
-    )}
-  </div>
-);
+    );
+  }
+}
 
-export default Tests;
+const mapStateToProps = (state) => {
+  return ({
+    tests: state.tests
+  })
+}
+
+export default connect(mapStateToProps, { getTests })(Tests);
