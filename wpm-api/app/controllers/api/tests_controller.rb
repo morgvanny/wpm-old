@@ -11,6 +11,7 @@ class Api::TestsController < ApplicationController
     else
       render json: { message: test.errors }, status: 400
     end
+  end
 
   def show
     render Test.find_by(id: params[:id])
