@@ -1,7 +1,8 @@
 const initialState = {
   team: '', 
   wpm: '', 
-  length: ''
+  length: '',
+  words: ''
 }
 
 export default (state = initialState, action) => {

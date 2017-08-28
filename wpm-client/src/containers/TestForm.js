@@ -37,11 +37,15 @@ class TestForm extends Component {
   }
 
   render() {
-    const { team, wpm, length } = this.props.testFormData;
+    const { words, team, wpm, length } = this.props.testFormData;
 
+    let input = null;
+    if ({team}.team !== "") {
+      input = <div><input type="text" onChange={this.handleOnChange} name="words" value={words}/></div>;
+    }
     return (
       <div>
-        <h1>Choose your team, to start the test!</h1>
+        <h1>Choose your team to start the test!</h1>
         <div>
           <button 
             onClick={this.startTest.bind(this, "Red")}
@@ -57,6 +61,7 @@ class TestForm extends Component {
           </button>
         </div>
         <form onSubmit={this.handleOnSubmit}>
+          {input}
           <label htmlFor="wpm"> wpm:</label>
           <input
             type="number"
