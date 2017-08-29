@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateTestFormData } from '../actions/testForm';
 import { createTest } from '../actions/tests';
+import { samples } from '../samples'
 
 class TestForm extends Component {
 
@@ -9,7 +10,8 @@ class TestForm extends Component {
     super(props);
 
     this.state = {
-      date: undefined
+      date: undefined,
+      sampleText: ""
     };
   }
 
@@ -21,62 +23,62 @@ class TestForm extends Component {
     this.props.updateTestFormData(currentTestFormData)
   }
 
+  wordsPerMinute = () => {
+    const wordsTyped = this.props.testFormData.words.length/5
+    const finishedDate = new Date(Date.now());
+    const minutesTaken = (finishedDate - this.state.date)/1000/60
+    return wordsTyped/minutesTaken
+  }
+
   handleOnSubmit = event => {
     event.preventDefault()
+    this.props.testFormData.wpm = this.wordsPerMinute()
+    this.props.testFormData.length = this.props.testFormData.words.length
+    delete this.props.testFormData.words
     this.props.createTest(this.props.testFormData)
   }
 
   startTest = text => {
-    console.log(text)
     this.props.testFormData.team = text
     this.setState({
-      date: new Date(Date.now())
+      date: new Date(Date.now()),
+      sampleText: samples[Math.floor(Math.random() * samples.length)]
     })
-    console.log(this.props.testFormData)
-    console.log(this.state.date)
+    this.refs.btnRed.setAttribute("disabled", "disabled");
+    this.refs.btnBlue.setAttribute("disabled", "disabled")
   }
 
   render() {
-    const { words, team, wpm, length } = this.props.testFormData;
+    const { words, team } = this.props.testFormData;
 
     let input = null;
+    let sample = null;
     if ({team}.team !== "") {
-      input = <div><input type="text" onChange={this.handleOnChange} name="words" value={words}/></div>;
+      input = <div><div><h4>Type as quickly as you can for team {team}!</h4></div><input autoFocus type="text" onChange={this.handleOnChange} name="words" value={words}/><button type="submit">Submit</button></div>;
+      sample = <div><p>{this.state.sampleText}</p></div>
     }
     return (
       <div>
         <h1>Choose your team to start the test!</h1>
         <div>
-          <button 
+          <button
+            ref="btnRed"
             onClick={this.startTest.bind(this, "Red")}
             id="Red"
           >
             Red
           </button>
-          <button 
+          <button
+            ref="btnBlue"
             onClick={this.startTest.bind(this, "Blue")}
             id="Blue"
           >
             Blue
           </button>
         </div>
+        {sample}
         <form onSubmit={this.handleOnSubmit}>
           {input}
-          <label htmlFor="wpm"> wpm:</label>
-          <input
-            type="number"
-            onChange={this.handleOnChange}
-            name="wpm"
-            value={wpm}
-          />
-          <label htmlFor="length"> length:</label>
-          <input
-            type="number"
-            onChange={this.handleOnChange}
-            name="length"
-            value={length}
-          />
-          <button type="submit">Submit</button>
         </form>
       </div>
     )
