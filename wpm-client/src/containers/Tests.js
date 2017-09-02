@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestRow from '../components/TestRow';
-import TestForm from './TestForm';
 import { getTests } from '../actions/tests';
 
 class Tests extends Component {
@@ -15,7 +14,6 @@ class Tests extends Component {
       <div>
         <h1>Tests</h1>
         {this.props.tests.map(test => <TestRow key={test.id} test={test} /> )}
-        <TestForm />
       </div>
     );
   }

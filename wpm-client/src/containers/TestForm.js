@@ -11,8 +11,14 @@ class TestForm extends Component {
 
     this.state = {
       date: undefined,
-      sampleText: ""
+      sampleText: "",
+      correct: true
     };
+  }
+
+  componentWillMount() {
+    const initialFormData = {team: "", wpm: "", length: "", words: ""}
+    this.props.updateTestFormData(initialFormData)
   }
 
   handleOnChange = event => {
@@ -21,6 +27,16 @@ class TestForm extends Component {
       [name]: value
     })
     this.props.updateTestFormData(currentTestFormData)
+    let samplePart = this.state.sampleText.substring(0, currentTestFormData.words.length);
+    if (((currentTestFormData.words !== samplePart) || samplePart.length > currentTestFormData.words.length) && this.state.correct) {
+      this.setState({
+        correct: false
+      })
+    } else if (!this.state.correct && currentTestFormData.words === samplePart) {
+      this.setState({
+        correct: true
+      })
+    }
   }
 
   wordsPerMinute = () => {
@@ -36,10 +52,14 @@ class TestForm extends Component {
     this.props.testFormData.length = this.props.testFormData.words.length
     delete this.props.testFormData.words
     this.props.createTest(this.props.testFormData)
+    delete this.props.testFormData.team
   }
 
   startTest = text => {
-    this.props.testFormData.team = text
+    const currentTestFormData = Object.assign({}, this.props.testFormData, {
+      'team': text
+    })
+    this.props.updateTestFormData(currentTestFormData)
     this.setState({
       date: new Date(Date.now()),
       sampleText: samples[Math.floor(Math.random() * samples.length)]
@@ -48,13 +68,17 @@ class TestForm extends Component {
     this.refs.btnBlue.setAttribute("disabled", "disabled")
   }
 
+  check = () => {
+    return (this.state.correct ? "correct" : "incorrect")
+  } 
+
   render() {
     const { words, team } = this.props.testFormData;
 
     let input = null;
     let sample = null;
     if ({team}.team !== "") {
-      input = <div><div><h4>Type as quickly as you can for team {team}!</h4></div><input autoFocus type="text" onChange={this.handleOnChange} name="words" value={words}/><button type="submit">Submit</button></div>;
+      input = <div><div><h4>Type as quickly as you can for team {team}!</h4></div><input autoFocus type="text" className={this.check()} onChange={this.handleOnChange} name="words" value={words}/><button type="submit">Submit</button></div>;
       sample = <div><p>{this.state.sampleText}</p></div>
     }
     return (

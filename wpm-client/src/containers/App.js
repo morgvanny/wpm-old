@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import Tests from './Tests'
 import './App.css';
+import { 
+  BrowserRouter as Router, 
+  Route
+} from 'react-router-dom';
+import Tests from './Tests'
+import TestForm from './TestForm'
+import NavBar from '../components/NavBar';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Tests />
-      </div>
+      <Router>
+        <div>
+          <NavBar />
+          <Route exact path="/" component={TestForm} />
+          <Route exact path="/scoreboard" component={Tests} />
+        </div>
+      </Router>
     );
   }
 }
