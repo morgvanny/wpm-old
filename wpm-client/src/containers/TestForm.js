@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateTestFormData } from '../actions/testForm';
 import { createTest } from '../actions/tests';
+import './TestForm.css'
 import { samples } from '../samples'
 
 class TestForm extends Component {
@@ -65,7 +66,14 @@ class TestForm extends Component {
       sampleText: samples[Math.floor(Math.random() * samples.length)]
     })
     this.refs.btnRed.setAttribute("disabled", "disabled");
-    this.refs.btnBlue.setAttribute("disabled", "disabled")
+    this.refs.btnBlue.setAttribute("disabled", "disabled");
+    if (text === "Red") {
+      this.refs.btnRed.setAttribute("class", "picked");
+      this.refs.btnBlue.setAttribute("class", "notPicked");
+    } else {
+      this.refs.btnBlue.setAttribute("class", "picked");
+      this.refs.btnRed.setAttribute("class", "notPicked");
+    }
   }
 
   check = () => {
@@ -78,8 +86,8 @@ class TestForm extends Component {
     let input = null;
     let sample = null;
     if ({team}.team !== "") {
-      input = <div><div><h4>Type as quickly as you can for team {team}!</h4></div><input autoFocus type="text" className={this.check()} onChange={this.handleOnChange} name="words" value={words}/><button type="submit">Submit</button></div>;
-      sample = <div><p>{this.state.sampleText}</p></div>
+      input = <div><div><h4>Type as quickly as you can for team {team}!</h4></div><textarea rows="6" autoFocus className={this.check()} onChange={this.handleOnChange} name="words" value={words}/><br/><button type="submit">Submit</button></div>;
+      sample = <div className="sample"><p>{this.state.sampleText}</p></div>
     }
     return (
       <div>
