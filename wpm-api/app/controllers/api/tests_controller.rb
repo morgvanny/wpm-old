@@ -14,7 +14,7 @@ class Api::TestsController < ApplicationController
   end
 
   def show
-    render Test.find_by(id: params[:id])
+    render json: Test.find_by(id: params[:id])
   end
 
   private
