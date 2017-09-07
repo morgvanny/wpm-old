@@ -12,8 +12,8 @@ class Tests extends Component {
   render() {
     return (
       <div>
-        <h1>Tests</h1>
-        {this.props.tests.map(test => <TestRow key={test.id} test={test} /> )}
+        <h1>Top 10 Results</h1>
+        {this.props.tests.slice(0,10).map(test => <TestRow key={test.id} test={test} /> )}
       </div>
     );
   }

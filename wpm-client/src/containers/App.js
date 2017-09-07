@@ -5,6 +5,7 @@ import {
   Route
 } from 'react-router-dom';
 import Tests from './Tests'
+import Stats from './Stats'
 import TestForm from './TestForm'
 import NavBar from '../components/NavBar';
 
@@ -15,7 +16,8 @@ class App extends Component {
         <div className="App">
           <NavBar />
           <Route exact path="/" component={TestForm} />
-          <Route exact path="/scoreboard" component={Tests} />
+          <Route exact path="/leaderboard" component={Tests} />
+          <Route exact path="/stats" component={Stats} />
         </div>
       </Router>
     );

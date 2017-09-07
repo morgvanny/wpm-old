@@ -20,6 +20,11 @@ button {
   color: white;
 }
 
+button[type="submit"] {
+  padding: 10px;
+  background-color: black;
+}
+
 #Red {
   background-color: red;
 }

@@ -1,7 +1,7 @@
 class Api::TestsController < ApplicationController
 
   def index
-    render json: Test.all
+    render json: Test.all.order('wpm DESC')
   end
 
   def create

@@ -13,7 +13,8 @@ class TestForm extends Component {
     this.state = {
       date: undefined,
       sampleText: "",
-      correct: true
+      correct: true,
+      result: ""
     };
   }
 
@@ -44,16 +45,23 @@ class TestForm extends Component {
     const wordsTyped = this.props.testFormData.words.length/5
     const finishedDate = new Date(Date.now());
     const minutesTaken = (finishedDate - this.state.date)/1000/60
-    return wordsTyped/minutesTaken
+    return Math.round(wordsTyped/minutesTaken);
   }
 
   handleOnSubmit = event => {
     event.preventDefault()
-    this.props.testFormData.wpm = this.wordsPerMinute()
-    this.props.testFormData.length = this.props.testFormData.words.length
-    delete this.props.testFormData.words
-    this.props.createTest(this.props.testFormData)
-    delete this.props.testFormData.team
+    if (this.props.testFormData.words !== this.state.sampleText) {
+      console.log("doesn't match")
+    } else {
+      this.props.testFormData.wpm = this.wordsPerMinute()
+      this.props.testFormData.length = this.props.testFormData.words.length
+      delete this.props.testFormData.words
+      this.setState({
+        result: "You typed " + this.props.testFormData.length + " characters at " + this.props.testFormData.wpm + " wpm!"
+      })
+      this.props.createTest(this.props.testFormData)
+      delete this.props.testFormData.team
+    }
   }
 
   startTest = text => {
@@ -112,6 +120,9 @@ class TestForm extends Component {
         <form onSubmit={this.handleOnSubmit}>
           {input}
         </form>
+        <div>
+          <p>{this.state.result}</p>
+        </div>
       </div>
     )
   }
