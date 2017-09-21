@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TestRow from '../components/TestRow';
 import { getTests } from '../actions/tests';
+import { updateTest } from '../actions/tests';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 
 class Tests extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.onClick = this.onClick.bind(this);
-    this.state = {
-      likes: [0,0,0,0,0,0,0,0,0,0]
-    };
   }
 
   componentDidMount() {
@@ -31,10 +29,9 @@ class Tests extends Component {
     console.log('d')
   }
 
-  onClick(i) {
-    let tmp = this.state.likes;
-    tmp[i] += 1;
-    this.setState({ likes: tmp })
+  onClick(test) {
+    const updateData = {id: test.id, team: test.team, wpm: test.wpm, length: test.length, likes: test.likes + 1}
+    this.props.updateTest(updateData)
   }
 
   render() {
@@ -42,7 +39,7 @@ class Tests extends Component {
       <div>
         <button onClick={this.callApi}>Call Api</button>
         <h1>Top 10 Results</h1>
-        {this.props.tests.slice(0,10).map((test, i) => <TestRow key={test.id} test={test} likes={this.state.likes[i]} onClick={() => this.onClick(i)}/> )}
+        {this.props.tests.slice(0,10).map((test) => <TestRow key={test.id} test={test} likes={test.likes} onClick={() => this.onClick(test)}/> )}
       </div>
     );
   }
@@ -54,4 +51,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps, { getTests })(Tests);
+export default connect(mapStateToProps, { getTests, updateTest })(Tests);

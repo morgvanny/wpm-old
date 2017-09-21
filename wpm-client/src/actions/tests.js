@@ -15,7 +15,14 @@ const addTest = test => {
     type: 'CREATE_TEST_SUCCESS',
     test
   }
-} 
+}
+
+const editTest = test => {
+  return {
+    type: 'UPDATE_TEST_SUCCESS',
+    test
+  }
+}
 
 // ** Async Actions **
 export const getTests = () => {
@@ -40,6 +47,23 @@ export const createTest = test => {
       .then(test => {
         dispatch(addTest(test))
         dispatch(resetTestForm())
+      })
+      .catch(error => console.log(error))
+  }
+}
+
+export const updateTest = test => {
+  return dispatch => {
+    return fetch(`${API_URL}/tests/${test.id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ test: test })
+    })
+      .then(response => response.json())
+      .then(test => {
+        dispatch(editTest(test))
       })
       .catch(error => console.log(error))
   }
