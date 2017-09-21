@@ -34,12 +34,19 @@ class Tests extends Component {
     this.props.updateTest(updateData)
   }
 
+  sortTests = () => {
+    let topWpm = this.props.tests.slice(0,10)
+    return (topWpm.sort(function(a,b) {
+      return b.likes - a.likes;
+    }))
+  }
+
   render() {
     return (
       <div>
         <button onClick={this.callApi}>Call Api</button>
         <h1>Top 10 Results</h1>
-        {this.props.tests.slice(0,10).map((test) => <TestRow key={test.id} test={test} likes={test.likes} onClick={() => this.onClick(test)}/> )}
+        {this.sortTests().map((test) => <TestRow key={test.id} test={test} likes={test.likes} onClick={() => this.onClick(test)}/> )}
       </div>
     );
   }
