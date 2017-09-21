@@ -10,10 +10,8 @@ class Tests extends Component {
 
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
-    this.state = {
-      likes: [0,0,0,0,0,0,0,0,0,0]
-    };
+    
+    
   }
 
   componentDidMount() {
@@ -31,18 +29,12 @@ class Tests extends Component {
     console.log('d')
   }
 
-  onClick(i) {
-    let tmp = this.state.likes;
-    tmp[i] += 1;
-    this.setState({ likes: tmp })
-  }
-
   render() {
     return (
       <div>
         <button onClick={this.callApi}>Call Api</button>
         <h1>Top 10 Results</h1>
-        {this.props.tests.slice(0,10).map((test, i) => <TestRow key={test.id} test={test} likes={this.state.likes[i]} onClick={() => this.onClick(i)}/> )}
+        {this.props.tests.slice(0,10).map((test, i) => <TestRow key={test.id} test={test} /> )}
       </div>
     );
   }
