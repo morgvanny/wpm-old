@@ -18,11 +18,6 @@ class TestForm extends Component {
     };
   }
 
-  componentWillMount() {
-    const initialFormData = {team: "", wpm: "", length: "", words: ""}
-    this.props.updateTestFormData(initialFormData)
-  }
-
   handleOnChange = event => {
     const { name, value } = event.target;
     const currentTestFormData = Object.assign({}, this.props.testFormData, {
