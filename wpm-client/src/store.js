@@ -1,6 +1,7 @@
 import {
   createStore,
   applyMiddleware,
+  compose,
   combineReducers
 } from 'redux';
 import thunk from 'redux-thunk';
@@ -12,10 +13,10 @@ const reducers = combineReducers({
   tests,
   testFormData
 });
-const middleware = [thunk];
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default createStore(
   reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(...middleware),
+  composeEnhancers(applyMiddleware(thunk))
 );
