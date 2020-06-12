@@ -69,7 +69,7 @@ GEM
       activesupport (>= 4.2.0)
     google-id-token (1.4.2)
       jwt (>= 1)
-    google_sign_in (1.1.2)
+    google_sign_in (1.2.0)
       google-id-token (>= 1.4.0)
       oauth2 (>= 1.4.0)
       rails (>= 5.2.0)
