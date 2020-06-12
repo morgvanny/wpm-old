@@ -14,10 +14,8 @@ textarea {
 
 button {
   padding: 50px;
-  border-width: 0;
-  margin: 0px 25px;
+  margin: 0 25px;
   font-size: 20px;
-  color: white;
 }
 
 button[type="submit"] {
@@ -25,11 +23,11 @@ button[type="submit"] {
   background-color: black;
 }
 
-#Red {
+.red {
   background-color: red;
 }
 
-#Blue {
+.blue {
   background-color: blue;
 }
 
