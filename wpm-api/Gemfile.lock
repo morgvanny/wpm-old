@@ -104,7 +104,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     pg (1.2.3)
-    puma (4.3.5)
+    puma (4.3.6)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-cors (1.1.1)
